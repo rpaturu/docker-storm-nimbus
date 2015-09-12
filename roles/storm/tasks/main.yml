@@ -32,4 +32,5 @@
   with_items:
     - { src: 'storm.yaml.tmpl', dest: '/etc/confd/templates' }
     - { src: 'storm.toml', dest: '/etc/confd/conf.d' }
-    - { src: 'launch-nimbus.sh', dest: '/opt' }
+    - { src: 'launch-ui.sh', dest: '/opt' }
+    - { src: 'restart-ui.sh', dest: '/opt' }

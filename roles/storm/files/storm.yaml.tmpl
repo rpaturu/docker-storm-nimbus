@@ -1,10 +1,13 @@
 storm.zookeeper.servers:
-{{ range gets "/*" }}
+{{ range gets "/zookeeper/*" }}
 {{$server := json .Value}}
     - "{{$server.address}}"
 {{end}}
 
-nimbus.host: "NIMBUS_HOST"
+{{ range gets "/storm-nimbus/*" }}
+{{$server := json .Value}}
+nimbus.host: "{{$server.address}}"
+{{end}}
 
 storm.local.dir: "/var/lib/storm"
 
