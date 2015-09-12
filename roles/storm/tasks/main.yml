@@ -1,0 +1,35 @@
+# file: roles/java/storm/main.yml
+
+- name: Add storm group
+  group: name=storm state=present
+
+- name: Add storm sser
+  user: name=storm comment="Storm system user" system=yes group=storm home=/home/storm
+
+- name: Change storm home directory permissions
+  file: path=/home/storm state=directory mode=0755 owner=storm group=storm
+
+- name: Download storm release
+  get_url: url=http://mirror.csclub.uwaterloo.ca/apache/storm/apache-storm-0.9.5/apache-storm-0.9.5.tar.gz dest=/tmp/apache-storm-0.9.5.tar.gz mode=0744
+
+- name: Install storm
+  unarchive: src=/tmp/apache-storm-0.9.5.tar.gz dest=/usr/share copy=no
+
+- name: Change install directory ownership to storm
+  file: path=/usr/share/apache-storm-0.9.5 state=directory owner=storm group=storm recurse=yes
+
+- name: Create a link to storm version
+  file: src=/usr/share/apache-storm-0.9.5 dest=/usr/share/storm state=link
+
+- name: Create storm local directory
+  file: path=/var/lib/storm state=directory mode=0755 owner=storm group=storm
+
+- name: Create storm logs directory
+  file: path=/usr/share/storm/logs state=directory mode=0755 owner=storm group=storm
+
+- name: Copy Confd files and startup script
+  copy: src={{ item.src }} dest={{ item.dest }} mode=0744
+  with_items:
+    - { src: 'storm.yaml.tmpl', dest: '/etc/confd/templates' }
+    - { src: 'storm.toml', dest: '/etc/confd/conf.d' }
+    - { src: 'launch-nimbus.sh', dest: '/opt' }

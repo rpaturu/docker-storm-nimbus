@@ -1,0 +1,15 @@
+storm.zookeeper.servers:
+{{ range gets "/*" }}
+{{$server := json .Value}}
+    - "{{$server.address}}"
+{{end}}
+
+nimbus.host: "NIMBUS_HOST"
+
+storm.local.dir: "/var/lib/storm"
+
+supervisor.slots.ports:
+    - 6700
+    - 6701
+    - 6702
+    - 6703
