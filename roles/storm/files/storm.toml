@@ -1,9 +1,0 @@
-[template]
-src         = "storm.yaml.tmpl"
-dest        = "/usr/share/storm/conf/storm.yaml"
-owner       = "root"
-group       = "root"
-mode        = "0644"
-prefix      = "/services"
-keys        = [ "/" ]
-reload_cmd  = "/opt/restart-ui.sh"
