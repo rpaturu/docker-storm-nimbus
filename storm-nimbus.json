@@ -16,7 +16,7 @@
       "type": "ansible-local",
       "playbook_file": "playbooks/local.yml",
       "role_paths": [
-        "roles/storm"
+        "roles/storm-nimbus"
       ],
       "extra_arguments":[
           "--extra-vars 'version={{user `version`}}'"

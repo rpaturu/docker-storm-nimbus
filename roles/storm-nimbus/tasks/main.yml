@@ -1,9 +1,9 @@
-# file: roles/java/storm/main.yml
+# file: roles/storm-nimbus/tasks/main.yml
 
 - name: Add storm group
   group: name=storm state=present
 
-- name: Add storm sser
+- name: Add storm system user
   user: name=storm comment="Storm system user" system=yes group=storm home=/home/storm
 
 - name: Change storm home directory permissions

@@ -15,6 +15,9 @@ until confd -onetime -node $ETCD -config-file /etc/confd/conf.d/storm.toml > /va
   sleep 5
 done
 
+echo "[storm] Running confd in the background"
+confd -interval 120 -node $ETCD -config-file /etc/confd/conf.d/storm.toml > /var/log/confd.log 2>&1 &
+
 echo "[storm] running storm nimbus"
 /usr/share/storm/bin/storm nimbus
 
@@ -24,6 +27,3 @@ sleep 30
 echo "[storm] tailing all storm log files"
 tail -f /usr/share/storm/logs/*
 
-echo "[storm] Running confd in the background"
-# Run confd in the background to watch the upstream servers
-confd -interval 120 -node $ETCD -config-file /etc/confd/conf.d/storm.toml > /var/log/confd.log 2>&1
